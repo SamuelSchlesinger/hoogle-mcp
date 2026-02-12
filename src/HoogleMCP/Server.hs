@@ -2,7 +2,19 @@
 --
 -- Implements the Model Context Protocol over JSON-RPC 2.0 on stdio,
 -- proxying search requests to the Hoogle JSON API.
-module HoogleMCP.Server (run) where
+module HoogleMCP.Server
+    ( run
+    -- * JSON-RPC types (exported for testing)
+    , Request (..)
+    , Response (..)
+    , ResponseBody (..)
+    -- * Pure helpers (exported for testing)
+    , formatResults
+    , formatInfo
+    , textContent
+    , initializeResult
+    , toolsListResult
+    ) where
 
 import Control.Exception (SomeException, catch, displayException)
 import Control.Monad (unless)
@@ -10,6 +22,7 @@ import Data.Aeson
 import Data.Aeson.KeyMap qualified as KM
 import Data.ByteString qualified as BS
 import Data.ByteString.Lazy qualified as LBS
+import Data.Maybe (fromMaybe)
 import Data.Text (Text)
 import Data.Text qualified as T
 import System.Environment (lookupEnv)
@@ -64,7 +77,7 @@ run = do
     hSetBuffering stdin  LineBuffering
     hSetBuffering stdout NoBuffering
     hSetBuffering stderr LineBuffering
-    baseUrl <- maybe "https://hoogle.haskell.org" id <$> lookupEnv "HOOGLE_URL"
+    baseUrl <- fromMaybe "https://hoogle.haskell.org" <$> lookupEnv "HOOGLE_URL"
     hPutStrLn stderr $ "hoogle-mcp: using " <> baseUrl
     loop baseUrl
 

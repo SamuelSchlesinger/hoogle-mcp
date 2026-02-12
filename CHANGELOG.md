@@ -1,5 +1,7 @@
 # Revision history for hoogle-mcp
 
-## 0.1.0.0 -- YYYY-mm-dd
+## 0.1.0.0 -- 2026-02-12
 
-* First version. Released on an unsuspecting world.
+* Initial release.
+* MCP server exposing `hoogle_search` and `hoogle_info` tools.
+* Communicates over JSON-RPC 2.0 on stdio.

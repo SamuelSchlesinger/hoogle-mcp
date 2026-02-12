@@ -2,7 +2,8 @@ cabal-version: 3.14
 name:          hoogle-mcp
 version:       0.1.0.0
 synopsis:      MCP server for Hoogle
-license:       NONE
+license:       MIT
+license-file:  LICENSE
 author:        Samuel Schlesinger
 maintainer:    sgschlesinger@gmail.com
 build-type:    Simple
@@ -12,21 +13,42 @@ extra-doc-files: CHANGELOG.md
 common warnings
     ghc-options: -Wall
 
-executable hoogle-mcp
-    import:             warnings
-    main-is:            Main.hs
-    other-modules:
-        HoogleMCP.Hoogle
-        HoogleMCP.Server
-    hs-source-dirs:     src
+common lang
     default-language:   GHC2021
     default-extensions:
         DerivingStrategies
         OverloadedStrings
-    ghc-options:        -threaded -rtsopts
+
+library
+    import:             warnings, lang
+    exposed-modules:
+        HoogleMCP.Hoogle
+        HoogleMCP.Server
+    hs-source-dirs:     src
     build-depends:
         base >= 4.18 && < 5
       , aeson >= 2
       , bytestring
       , http-conduit >= 2.3
       , text >= 2
+
+executable hoogle-mcp
+    import:             warnings, lang
+    main-is:            Main.hs
+    hs-source-dirs:     app
+    ghc-options:        -threaded -rtsopts
+    build-depends:
+        base >= 4.18 && < 5
+      , hoogle-mcp
+
+test-suite hoogle-mcp-test
+    import:             warnings, lang
+    type:               exitcode-stdio-1.0
+    main-is:            Main.hs
+    hs-source-dirs:     test
+    build-depends:
+        base >= 4.18 && < 5
+      , aeson >= 2
+      , bytestring
+      , text >= 2
+      , hoogle-mcp
