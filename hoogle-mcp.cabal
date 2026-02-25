@@ -7,6 +7,15 @@ license-file:  LICENSE
 author:        Samuel Schlesinger
 maintainer:    sgschlesinger@gmail.com
 build-type:    Simple
+homepage:       https://github.com/SamuelSchlesinger/hoogle-mcp
+bug-reports:    https://github.com/SamuelSchlesinger/hoogle-mcp/issues
+category:       Development, Tools
+tested-with:    GHC ==9.6.7
+
+source-repository head
+  type: git
+  location: https://github.com/SamuelSchlesinger/hoogle-mcp
+
 
 extra-doc-files: CHANGELOG.md
 
